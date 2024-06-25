@@ -1,10 +1,10 @@
-package com.sita.portfolio;
+package com.sita.imagegen;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PortfolioApplicationTests {
+class ImageGenerationApplicationTests {
 
 	@Test
 	void contextLoads() {
