@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/api")
 public class ImageGenerationController {
@@ -16,13 +18,21 @@ public class ImageGenerationController {
     private ImageGenerationService imageGenerationService;
 
     @GetMapping("/generate-image")
-    public ResponseEntity<byte[]> generateImage(@RequestParam String prompt) {
-        byte[] imageBytes = imageGenerationService.generateImage(prompt);
+    public ResponseEntity<?> generateImage(@RequestParam String prompt) {
+        try {
+            byte[] imageBytes = imageGenerationService.generateImage(prompt);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        headers.setContentLength(imageBytes.length);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            headers.setContentLength(imageBytes.length);
 
-        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } catch (ExecutionException | InterruptedException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error retrieving API key or generating image: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error occurred: " + e.getMessage());
+        }
     }
 }
