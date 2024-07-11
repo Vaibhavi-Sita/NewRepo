@@ -1,13 +1,13 @@
-package com.sita.imagegen;
+package com.sita.askcode;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ImageGenerationApplication {
+public class AskcodeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ImageGenerationApplication.class, args);
+		SpringApplication.run(AskcodeApplication.class, args);
 	}
 
 }
