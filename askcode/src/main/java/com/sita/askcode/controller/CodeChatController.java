@@ -16,7 +16,7 @@ import reactor.core.publisher.Flux;
 
 import java.util.Map;
 
-@Controller
+@RestController
 public class CodeChatController {
 
     private ChatCodeService chatCodeService;
